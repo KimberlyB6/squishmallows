@@ -1,0 +1,70 @@
+:root {
+    --bg: #F2B6C6;
+    --text: #BF2A70;
+    --muted: #D8F0F2;
+    --accent: #AEEBF2;
+    --extra: #000;
+}
+
+.card-footer {
+    padding: 10px;
+    background-color: var(--accent);
+    color: var(--text);
+    text-align: center;
+}
+
+.card {
+    background-color: var(--muted);
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    align-content: flex-end;
+}
+
+.gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 10px 20px 20px 20px;
+}
+
+.gallery-grid .card {
+    float: left;
+    width: 24%;
+    margin: 0 1% 10px 0;
+}
+
+.gallery-grid .card-img {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    flex: 1 0 auto;
+}
+
+.gallery-grid .card-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.gallery-grid .card-footer {
+    flex: 0 0 auto;
+    padding: 10px;
+    background-color: var(--accent);
+    color: var(--text);
+    overflow: visible;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .gallery-grid .card {
+        width: 100%;
+        margin: 10px 20px 20px 20px;
+    }
+
+}

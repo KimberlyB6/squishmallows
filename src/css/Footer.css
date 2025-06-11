@@ -1,0 +1,22 @@
+:root {
+  --bg: #F2B6C6;
+  --text: #BF2A70;
+  --muted: #D8F0F2;
+  --accent: #AEEBF2;
+  --extra: #000;
+}
+
+#main-footer {
+    background-color: var(--muted);
+    color: var(--text);
+}
+
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

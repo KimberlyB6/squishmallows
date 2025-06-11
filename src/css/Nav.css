@@ -1,0 +1,131 @@
+:root {
+  --bg: #F2B6C6;
+  --text: #BF2A70;
+  --muted: #D8F0F2;
+  --accent: #AEEBF2;
+  --extra: #000;
+}
+
+/* Main nav wrapper */
+#main-nav {
+  width: 100%;
+  background-color: var(--muted);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header inside nav */
+#main-nav .header-bar {
+  padding: 10px 0;
+}
+
+/* Flex container for logo, title, menu and user */
+#main-nav .nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo styling */
+#main-nav .logo img {
+  max-height: 100px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Site title */
+#main-nav .logo-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--text);
+  margin-left: 10px;
+}
+
+/* Nav links */
+#main-nav ul {
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+#main-nav li {
+  margin-right: 20px;
+}
+
+#main-nav a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 5px 8px;
+  font-size: 16px;
+}
+
+#main-nav a.active {
+  border-bottom: 2px solid var(--accent);
+}
+
+/* Toggle button (shown on small screens) */
+#toggle-nav {
+  display: flex;
+  background: var(--accent);
+  font-size: 24px;
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  justify-content: center;
+}
+
+#toggle-nav:hover {
+  background: var(--text);
+  color: var(--muted);
+}
+
+/* Utility class to hide the menu on small screens */
+.hide-small {
+  display: none;
+}
+
+/* User avatar/name */
+#main-nav .user-menu {
+  display: flex;
+  align-items: center;
+}
+
+#main-nav .user-menu div {
+  font-size: 14px;
+  color: var(--text);
+}
+
+#main-nav .user-menu img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-left: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Desktop: hide toggle, always show menu */
+@media (min-width: 768px) {
+  #toggle-nav {
+    display: none;
+  }
+  .hide-small {
+    display: flex;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  #main-nav .nav-bar {
+    flex-wrap: wrap;
+  }
+  #main-nav ul {
+    width: 100%;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  #main-nav li {
+    margin: 8px 0;
+  }
+}

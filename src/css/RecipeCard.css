@@ -1,0 +1,33 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--muted);
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  width: 24%;
+  margin: 0 1% 10px 0;
+  cursor: pointer;
+}
+
+.card-img {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.card-img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-footer {
+  padding: 10px;
+  background-color: var(--accent);
+  color: var(--text);
+  text-align: center;
+}
