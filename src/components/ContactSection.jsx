@@ -3,6 +3,7 @@ import '../css/ContactSection.css';
 
 const ContactSection = () => (
   <section id="contact" class="contact-section">
+
     <div class="form-container">
       <h2>Contact Us</h2>
       <form id="contactForm">
@@ -17,6 +18,7 @@ const ContactSection = () => (
         <div id="formMessage" class="message"></div>
       </form>
     </div>
+
     <div class="iframe-container">
       <h2>DIY Recipes! &hearts;</h2>
       <iframe width="560" height="350" src="https://www.youtube.com/embed/S0gGIH6e2Yk?si=tv-DzM4eX8PWcrQi"

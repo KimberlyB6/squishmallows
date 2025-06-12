@@ -13,11 +13,11 @@ const Nav = () => {
                 <div className="container nav-bar">
                     <div className="logo">
                         <a href="/">
-                            <img src="/images/Logo.png" alt="Squish & Sweets Central Logo" />
+                            <img src="/squishmallows/images/Logo.png" alt="Squish & Sweets Central Logo" />
                         </a>
                     </div>
                     <div className="logo-title">Squish &amp; Sweets Central</div>
-                    <ul class={menuOpen ? " " : "hide-small"}>
+                    <ul className={menuOpen ? " " : "hide-small"}>
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/Desserts">Desserts</Link></li>
                         <li><Link to="/Gallery">Squishmallow</Link></li>
@@ -26,12 +26,11 @@ const Nav = () => {
                     </ul>
                     <div className="user-menu">
                         <div>Kimberly Brown</div>
-                        <img src="/images/home/user.jpg" alt="User" width="24" height="24" />
+                        <img src="/squishmallows/images/home/user.jpg" alt="User" width="24" height="24" />
                     </div>
+                    <button id="toggle-nav" onClick={toggleNav}>ꕥ</button>
                 </div>
             </header>
-            <button id="toggle-nav" onClick={toggleNav}>ꕥ</button>
-
         </nav>
     );
 };

@@ -1,3 +1,12 @@
+:root {
+  --bg: #F2B6C6;
+  --text: #BF2A70;
+  --muted: #D8F0F2;
+  --accent: #AEEBF2;
+  --extra: #000;
+}
+
+/* Structure */
 body {
   margin: 0;
   font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -5,15 +14,67 @@ body {
   color: var(--text);
 }
 
-/* —— Header —— */
-.header-bar {
-  background-color: var(--muted);
-} 
+/* Grid */
 
-.nav-bar {
+.recipe-list {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.recipe-list .card {
+  float: none;
+  width: auto;
+  margin: 0;
+  flex: 1 1 240px;
+  max-width: 400px;
+}
+
+.recipe-section {
+  padding: 40px 20px;
+  align-content: center;
+}
+
+/* Card */
+.card {
+  background: var(--muted);
+  display: flex;
+  flex: 1 1 240px;
+  max-width: 240px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px var(--extra);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card-img {
+  flex: 1 1 auto;
+}
+
+.card-img img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.card-footer {
+  padding: 12px;
+  font-size: 18px;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text);
+  font-weight: bold;
+  margin-top: auto;
 }
 
 /* —— Navigation —— */
@@ -23,10 +84,6 @@ nav ul {
   align-items: center;
   padding: 0;
   margin: 0;
-}
-
-nav li {
-  margin-right: 15px;
 }
 
 .menu-toggle {
@@ -40,18 +97,90 @@ nav li {
   cursor: pointer;
 }
 
-/* —— Responsive —— */
+/* —— Modal —— */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90%;
+  overflow-y: auto;
+  border-radius: 8px;
+  padding: 16px 24px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* —— Modal Inner Elements —— */
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 28px;
+  color: var(--text);
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.modal-content p {
+  margin-bottom: 16px;
+}
+
+.modal-content ul,
+.modal-content ol {
+  margin-left: 20px;
+  margin-bottom: 16px;
+}
+
+/* —— Queries —— */
 @media (max-width: 600px) {
+
+  .modal-content {
+    width: 95%;
+    padding: 12px;
+  }
+
   nav ul {
     display: none;
     flex-direction: column;
   }
-  .menu-toggle {
-    display: block;
+
+  nav.nav-open ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .nav-bar {
     flex-direction: column;
+  }
+
+  .hero-slider {
+    display: none;
   }
 
   .mobile-hero {

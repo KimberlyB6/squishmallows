@@ -105,7 +105,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Desktop: hide toggle, always show menu */
 @media (min-width: 768px) {
   #toggle-nav {
     display: none;
@@ -115,7 +114,6 @@
   }
 }
 
-/* Mobile adjustments */
 @media (max-width: 767px) {
   #main-nav .nav-bar {
     flex-wrap: wrap;
@@ -127,5 +125,12 @@
   }
   #main-nav li {
     margin: 8px 0;
+  }
+
+  #toggle-nav {
+    display: flex;
+  }
+  .hide-small {
+    display: flex;
   }
 }

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import '../css/Hero.css';
 
 const slides = [
-  '/images/home/Cake Squish.png',
-  '/images/home/full.png',
-  '/images/home/cutedesserts.png'
+  '/squishmallows/images/home/Cake Squish.png',
+  '/squishmallows/images/home/full.png',
+  '/squishmallows/images/home/cutedesserts.png'
 ];
 
 const Hero = () => {
@@ -28,7 +28,7 @@ const Hero = () => {
           />
         ))}
       </section>
-      <img src='/images/home/welcomee.png' className='mobile-hero' alt='Welcome' />
+      <img src='/squishmallows/images/home/welcomee.png' className='mobile-hero' alt='Welcome' />
     </section>
   );
 };
