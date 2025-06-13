@@ -1,6 +1,13 @@
 .home-list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 20px 0;
+  flex-wrap:wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 10px;
+  margin-right: 5px;
+  gap: 10px;
+}
+
+.home-list {
+  gap: 16px;                   
 }

@@ -1,0 +1,37 @@
+:root {
+  --bg: #F2B6C6;
+  --text: #BF2A70;
+  --muted: #D8F0F2;
+  --accent: #AEEBF2;
+  --text2: rgba(178, 189, 200, 0.833);
+  --extra: #000;
+}
+
+.modal-content {
+    background-color: var(--text2);
+    color: var(--text);
+}
+
+.add-recipe-btn {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background-color: #BF2A70;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  z-index: 1000;
+}
+
+.add-recipe-btn:hover {
+  transform: scale(1.1);
+}

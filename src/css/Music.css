@@ -1,36 +1,29 @@
-/* Music Cards */
 .music-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 16px;
+  margin: 10px;
 }
 
 .music-cards .card {
-  width: 30%;
-  margin-bottom: 20px;
-  margin-top: 10px;
-}
-
-.card {
+  flex: 1 1 240px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
   background-color: var(--muted);
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  align-content: flex-end;
 }
 
-.card-img {
-  background-color: var(--muted);
+.music-cards .card-img {
   width: 100%;
   padding-bottom: 100%;
-  border-radius: 8px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   position: relative;
 }
 
-.card-img img {
+.music-cards .card-img img {
   position: absolute;
   top: 0;
   left: 0;
@@ -40,18 +33,10 @@
   border-radius: 8px;
 }
 
-.card-title {
-  padding: 10px;
+.music-cards .card-title {
+  padding: 12px;
   background-color: var(--accent);
   color: var(--text);
   text-align: center;
-}
-
-
-
-@media (max-width: 600px) {
-    .music-cards .card{
-        width: 100%;
-        margin: 10px 20px 20px 20px;
-    }
+  font-size: 16px;
 }

@@ -43,7 +43,7 @@ body {
   background: var(--muted);
   display: flex;
   flex: 1 1 240px;
-  max-width: 240px;
+  max-width: 400px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 8px var(--extra);
@@ -68,7 +68,6 @@ body {
 .card-footer {
   padding: 12px;
   font-size: 18px;
-  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
