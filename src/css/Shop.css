@@ -6,9 +6,6 @@
   padding: 20px;
 }
 
-.card-footer p {
-}
-
 .shop-grid .card {
   display: flex;
   flex-direction: column;
@@ -16,8 +13,8 @@
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   overflow: hidden;
-  flex: 1 1 240px; 
-  max-width: 400px; 
+  flex: 1 1 300px; 
+  max-width: 300px; 
 }
 
 .shop-grid .card-img {

@@ -7,7 +7,7 @@
 }
 
 .music-cards .card {
-  flex: 1 1 240px;
+  flex: 1 1 400px;
   max-width: 400px;
   display: flex;
   flex-direction: column;

@@ -42,8 +42,8 @@ body {
 .card {
   background: var(--muted);
   display: flex;
-  flex: 1 1 240px;
-  max-width: 400px;
+  flex: 1 1 300px;
+  max-width:300px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 8px var(--extra);
