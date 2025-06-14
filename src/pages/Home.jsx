@@ -4,6 +4,11 @@ import '../css/Home.css';
 import Hero from '../components/Hero';
 import ContactSection from '../components/ContactSection';
 
+const API_BASE =
+  process.env.NODE_ENV === "production"
+    ? "https://<your-app>.onrender.com"
+    : "http://localhost:3002";
+
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [active, setActive]   = useState(null);
@@ -11,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const loadRecipes = async () => {
       try {
-        const res = await axios.get('http://localhost:3002/api/squish');
+        const res = await axios.get('${API_BASE}');
         const featuredNames = [
           'Lemon Pound Cake',
           'Apple Pie',
@@ -43,7 +48,7 @@ const Home = () => {
               onClick={() => setActive(r)}
             >
               <div className="card-img">
-                <img src={`http://localhost:3002/${r.img_name}`} alt={r.name}/>
+                <img src={`${API_BASE}/${r.img_name}`} alt={r.name}/>
               </div>
               <div className="card-footer">{r.name}</div>
             </div>
@@ -70,7 +75,7 @@ const Home = () => {
             </span>
             <h2>{active.name}</h2>
             <img
-              src={`http://localhost:3002/${active.img_name}`}
+              src={`${API_BASE}/${active.img_name}`}
               alt={active.name}
               style={{ width: '100%', maxHeight: '300px', objectFit: 'cover', marginBottom: '16px'}} />
             <p>{active.description}</p>

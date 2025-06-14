@@ -3,6 +3,11 @@ import axios from 'axios';
 import RecipeList from '../components/RecipeList';
 import AddRecipe from '../components/AddRecipe';
 
+const API_BASE =
+  process.env.NODE_ENV === "production"
+    ? "https://<your-app>.onrender.com"
+    : "http://localhost:3002";
+
 const Desserts = () => {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -10,7 +15,7 @@ const Desserts = () => {
   useEffect(() => {
     const loadRecipes = async () => {
       try {
-        const res = await axios.get('http://localhost:3002/api/squish');
+        const res = await axios.get('${API_BASE}');
         setRecipes(res.data);
       } catch (err) {
         console.error('Error fetching desserts:', err);
@@ -53,7 +58,7 @@ const Desserts = () => {
             </button>
             <h2>{selectedRecipe.name}</h2>
             <img
-              src={`http://localhost:3002/${selectedRecipe.img_name}`}
+              src={`${API_BASE}/${selectedRecipe.img_name}`}
               alt={selectedRecipe.name}
               style={{
                 width: '100%',
