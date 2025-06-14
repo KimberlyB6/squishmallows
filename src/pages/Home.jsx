@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const loadRecipes = async () => {
       try {
-        const res = await axios.get('${API_BASE}');
+        const res = await axios.get(`${API_BASE}/api/squish`);
         const featuredNames = [
           'Lemon Pound Cake',
           'Apple Pie',

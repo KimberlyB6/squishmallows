@@ -13,7 +13,7 @@ const Desserts = () => {
   useEffect(() => {
     const loadRecipes = async () => {
       try {
-        const res = await axios.get('${API_BASE}');
+        const res = await axios.get(`${API_BASE}/api/squish`);
         setRecipes(res.data);
       } catch (err) {
         console.error('Error fetching desserts:', err);
