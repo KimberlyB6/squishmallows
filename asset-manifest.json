@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/squishmallows/static/css/main.40ad63cb.css",
-    "main.js": "/squishmallows/static/js/main.6cde697a.js",
+    "main.css": "/squishmallows/static/css/main.beaab4da.css",
+    "main.js": "/squishmallows/static/js/main.cb892f1f.js",
     "index.html": "/squishmallows/index.html",
-    "main.40ad63cb.css.map": "/squishmallows/static/css/main.40ad63cb.css.map",
-    "main.6cde697a.js.map": "/squishmallows/static/js/main.6cde697a.js.map"
+    "main.beaab4da.css.map": "/squishmallows/static/css/main.beaab4da.css.map",
+    "main.cb892f1f.js.map": "/squishmallows/static/js/main.cb892f1f.js.map"
   },
   "entrypoints": [
-    "static/css/main.40ad63cb.css",
-    "static/js/main.6cde697a.js"
+    "static/css/main.beaab4da.css",
+    "static/js/main.cb892f1f.js"
   ]
 }
