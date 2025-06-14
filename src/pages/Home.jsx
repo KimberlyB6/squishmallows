@@ -4,10 +4,7 @@ import '../css/Home.css';
 import Hero from '../components/Hero';
 import ContactSection from '../components/ContactSection';
 
-const API_BASE =
-  process.env.NODE_ENV === "production"
-    ? "https://squish-backend-1.onrender.com"
-    : "http://localhost:3002";
+const API_BASE = "https://squish-backend-1.onrender.com"
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
