@@ -5,7 +5,7 @@ import AddRecipe from '../components/AddRecipe';
 
 const API_BASE =
   process.env.NODE_ENV === "production"
-    ? "https://<your-app>.onrender.com"
+    ? "https://squish-backend-1.onrender.com"
     : "http://localhost:3002";
 
 const Desserts = () => {
