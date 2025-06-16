@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RecipeList from '../components/RecipeList';
 import AddRecipe from '../components/AddRecipe';
+import EditRecipe from '../components/EditRecipe';
 
 const API_BASE = "https://squish-backend-1.onrender.com"
-
 
 const Desserts = () => {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+
 
   useEffect(() => {
     const loadRecipes = async () => {
@@ -24,8 +26,20 @@ const Desserts = () => {
 
 
   const updateRecipes = (selectedRecipe) => {
-        setRecipes((recipes)=>[...recipes, selectedRecipe]);
-    };
+    setRecipes((recipes) => [...recipes, selectedRecipe]);
+  };
+
+  const handleEditSuccess = (updatedRecipe) => {
+    if (updatedRecipe) {
+      setRecipes(prev =>
+        prev.map(r => (r._id === updatedRecipe._id ? updatedRecipe : r))
+      );
+    } else {
+      setRecipes(prev => prev.filter(r => r._id !== selectedRecipe._id));
+    }
+    setIsEditing(false);
+    closeModal();
+  };
 
   const openModal = recipe => setSelectedRecipe(recipe);
   const closeModal = () => setSelectedRecipe(null);
@@ -33,11 +47,14 @@ const Desserts = () => {
   return (
     <>
       <AddRecipe updateRecipes={updateRecipes} />
+      <button onClick={() => setIsEditing(true)}>Edit</button>
       <h2>Desserts</h2>
       <main className="container">
         <RecipeList items={recipes} onCardClick={openModal} />
       </main>
-
+      {isEditing && selectedRecipe && (
+        <EditRecipe recipe={selectedRecipe} onSuccess={handleEditSuccess} />
+      )}
       {selectedRecipe && (
         <div
           id="recipe-modal"
