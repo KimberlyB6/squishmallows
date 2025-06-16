@@ -8,7 +8,7 @@ const RecipeList = ({ items, onCardClick }) => (
       <RecipeCard
         key={idx}
         name={item.name}
-        img={`http://localhost:3002/${item.img_name}`}
+        img={`https://squish-backend-1.onrender.com/${item.img_name}`}
         onClick={() => onCardClick(item)}
       />
     ))}
