@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RecipeList from '../components/RecipeList';
 import AddRecipe from '../components/AddRecipe';
-import EditRecipe from '../components/EditRecipe';
 
-const API_BASE = "https://squish-backend-1.onrender.com"
+const API_BASE = "https://squish-backend-1.onrender.com";
 
 const Desserts = () => {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-
+  const [editingRecipe, setEditingRecipe] = useState(null);
 
   useEffect(() => {
     const loadRecipes = async () => {
@@ -24,37 +22,49 @@ const Desserts = () => {
     loadRecipes();
   }, []);
 
-
-  const updateRecipes = (selectedRecipe) => {
-    setRecipes((recipes) => [...recipes, selectedRecipe]);
+  const updateRecipes = (newRecipe) => {
+    setRecipes(prev => [...prev, newRecipe]);
   };
 
   const handleEditSuccess = (updatedRecipe) => {
-    if (updatedRecipe) {
-      setRecipes(prev =>
-        prev.map(r => (r._id === updatedRecipe._id ? updatedRecipe : r))
-      );
-    } else {
-      setRecipes(prev => prev.filter(r => r._id !== selectedRecipe._id));
-    }
-    setIsEditing(false);
-    closeModal();
+    setRecipes(prev =>
+      prev.map(r => (r._id === updatedRecipe._id ? updatedRecipe : r))
+    );
+    setEditingRecipe(null);
+  };
+
+  const handleDeleteSuccess = (deletedId) => {
+    setRecipes(prev => prev.filter(r => r._id !== deletedId));
+    setEditingRecipe(null);
   };
 
   const openModal = recipe => setSelectedRecipe(recipe);
   const closeModal = () => setSelectedRecipe(null);
 
+  const handleEditClick = () => {
+    if (selectedRecipe) {
+      setEditingRecipe(selectedRecipe);
+      closeModal(); 
+    }
+  };
+
   return (
     <>
       <AddRecipe updateRecipes={updateRecipes} />
-      <button onClick={() => setIsEditing(true)}>Edit</button>
+
+      {editingRecipe && (
+        <AddRecipe
+          editingRecipe={editingRecipe}
+          onEditSuccess={handleEditSuccess}
+          onDeleteSuccess={handleDeleteSuccess}
+        />
+      )}
+
       <h2>Desserts</h2>
       <main className="container">
         <RecipeList items={recipes} onCardClick={openModal} />
       </main>
-      {isEditing && selectedRecipe && (
-        <EditRecipe recipe={selectedRecipe} onSuccess={handleEditSuccess} />
-      )}
+
       {selectedRecipe && (
         <div
           id="recipe-modal"
@@ -65,10 +75,7 @@ const Desserts = () => {
             className="modal-content"
             onClick={e => e.stopPropagation()}
           >
-            <button
-              className="close-btn"
-              onClick={closeModal}
-            >
+            <button className="close-btn" onClick={closeModal}>
               &times;
             </button>
             <h2>{selectedRecipe.name}</h2>
@@ -97,6 +104,8 @@ const Desserts = () => {
                 <li key={i}>{step}</li>
               ))}
             </ol>
+
+            <button onClick={handleEditClick}>Edit/Delete</button>
           </div>
         </div>
       )}
