@@ -20,7 +20,8 @@ const AddRecipe = ({ updateRecipes }) => {
     setResult("…Sending");
 
     const formData = new FormData(e.target);
-    const res = await fetch("${API_BASE}/api/squish", {
+    const API_BASE = "https://squish-backend-1.onrender.com";
+    const res = await fetch(`${API_BASE}/api/squish`, {
       method: "POST",
       body: formData,
     });
