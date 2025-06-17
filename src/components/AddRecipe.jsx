@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+import "../css/dialog.css";
+import "../css/AddRecipe.css";
+
 const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDeleteSuccess }) => {
   const [result, setResult] = useState("");
   const [prevSrc, setPrevSrc] = useState(editingRecipe?.img_name || "");
@@ -132,7 +136,7 @@ const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDelet
                   {prevSrc && (
                     <img
                       id="img-prev"
-                      src={prevSrc.startsWith("blob") ? prevSrc : `${API_BASE}/${prevSrc}`}
+                      src={prevSrc.startsWith("blob") ? prevSrc : `${API_BASE}/images/${prevSrc.replace(/^images[\\/]/, '')}`}
                       alt="preview"
                     />
                   )}
