@@ -1,116 +1,183 @@
-import "../css/dialog.css";
 import "../css/AddRecipe.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const AddRecipe = ({ updateRecipes }) => {
+const API_BASE = "http://localhost:3002";
+
+const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess = null, resetFormTrigger = false }) => {
   const [result, setResult] = useState("");
   const [prevSrc, setPrevSrc] = useState("");
-  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
-  const uploadImage = (e) => setPrevSrc(URL.createObjectURL(e.target.files[0]));
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [instructions, setInstructions] = useState("");
+  const [img, setImg] = useState(null);
+
+  const resetForm = () => {
+  setName("");
+  setDescription("");
+  setIngredients("");
+  setInstructions("");
+  setImg(null);
+  setPrevSrc("");
+};
+
+useEffect(() => {
+  if (resetFormTrigger) resetForm();
+}, [resetFormTrigger]);
+
+
+
+  useEffect(() => {
+    if (editingRecipe) {
+      setShowDialog(true);
+      setName(editingRecipe.name);
+      setDescription(editingRecipe.description);
+      setIngredients(editingRecipe.ingredients.join("\n"));
+      setInstructions(editingRecipe.instructions.join("\n"));
+      setPrevSrc(`${API_BASE}/${editingRecipe.img_name}`);
+    }
+  }, [editingRecipe]);
+
+  const uploadImage = (e) => {
+    const file = e.target.files[0];
+    setImg(file);
+    setPrevSrc(URL.createObjectURL(file));
+  };
 
   const openAddDialog = (e) => {
     e.preventDefault();
-    setShowAddDialog(true);
+    setShowDialog(true);
   };
-  const closeAddDialog = () => setShowAddDialog(false);
+  const closeAddDialog = () => {
+    setShowDialog(false);
+    setResult("");
+
+    if (!editingRecipe) {
+      setName("");
+      setDescription("");
+      setIngredients("");
+      setInstructions("");
+      setImg(null);
+      setPrevSrc("");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setResult("…Sending");
 
-    const formData = new FormData(e.target);
-    const API_BASE = "localhost:3002";
-    const res = await fetch(`${API_BASE}/api/squish`, {
-      method: "POST",
-      body: formData,
-    });
+    if (name.length < 3 || description.length < 3 || ingredients.length < 3 || instructions.length < 3) {
+      setResult("❌ All fields must be at least 3 characters.");
+      return;
+    }
 
-    if (res.ok) {
-      const newRecipe = await res.json();
-      setResult("Recipe Added!");
-      updateRecipes(newRecipe);
-      e.target.reset();
-      setPrevSrc("");
-      closeAddDialog();
-    } else {
-      const errorText = await res.text();
-      setResult("Error: " + errorText);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("ingredients", ingredients);
+    formData.append("instructions", instructions);
+    if (img) formData.append("img", img);
+
+    try {
+      const res = editingRecipe
+        ? await fetch(`${API_BASE}/api/squish/${editingRecipe._id}`, {
+            method: "PUT",
+            body: formData,
+          })
+        : await fetch(`${API_BASE}/api/squish`, {
+            method: "POST",
+            body: formData,
+          });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setResult("✅ Success!");
+        if (editingRecipe && onEditSuccess) {
+          onEditSuccess(data);
+        } else {
+          updateRecipes(data);
+        }
+        closeAddDialog();
+      } else {
+        setResult("❌ " + (data.message || "Error saving recipe"));
+      }
+    } catch (err) {
+      console.error(err);
+      setResult("❌ Network error");
     }
   };
 
   return (
     <div id="add-recipe-plan">
-      <button onClick={openAddDialog} className="add-recipe-btn" label="Add Recipe">
-        +
-      </button>
+      {!editingRecipe && (
+        <button onClick={openAddDialog} className="add-recipe-btn" label="Add Recipe">
+          +
+        </button>
+      )}
 
-      {showAddDialog && (
+      {showDialog && (
         <div className="modal-backdrop" onClick={closeAddDialog}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()} >
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={closeAddDialog}>
               &times;
             </button>
 
             <form id="add-recipe-form" onSubmit={handleSubmit}>
-              <h3>Create New Recipe</h3>
+              <h3>{editingRecipe ? "Edit Recipe" : "Create New Recipe"}</h3>
 
               <p>
-                <label htmlFor="name">Recipe Name: </label>
+                <label htmlFor="name">Recipe Name:</label>
                 <input
                   type="text"
                   id="name"
-                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
                   minLength={3}
                 />
               </p>
 
               <p>
-                <label htmlFor="description">Description: </label>
+                <label htmlFor="description">Description:</label>
                 <input
                   type="text"
                   id="description"
-                  name="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                   required
                   minLength={3}
                 />
               </p>
 
               <p>
-                <label htmlFor="ingredients">
-                  Ingredients (one per line): 
-                </label>
+                <label htmlFor="ingredients">Ingredients (one per line):</label>
                 <textarea
                   id="ingredients"
-                  name="ingredients"
+                  value={ingredients}
+                  onChange={(e) => setIngredients(e.target.value)}
                   required
                   minLength={3}
-                  rows={4}
                 />
               </p>
 
               <p>
-                <label htmlFor="instructions">
-                  Instructions (one per line): 
-                </label>
+                <label htmlFor="instructions">Instructions (one per line):</label>
                 <textarea
                   id="instructions"
-                  name="instructions"
+                  value={instructions}
+                  onChange={(e) => setInstructions(e.target.value)}
                   required
                   minLength={3}
-                  rows={4}
                 />
               </p>
 
               <section className="columns">
                 <div>
                   {prevSrc && (
-                    <img
-                      id="img-prev"
-                      src={prevSrc}
-                      alt="preview"
-                    />
+                    <img id="img-prev" src={prevSrc} alt="preview" />
                   )}
                 </div>
                 <p id="img-upload">

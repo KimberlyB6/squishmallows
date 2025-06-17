@@ -4,13 +4,14 @@ import '../css/Home.css';
 import Hero from '../components/Hero';
 import ContactSection from '../components/ContactSection';
 
-const API_BASE = "localhost:3002";
+const API_BASE = "http://localhost:3002";
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [active, setActive]   = useState(null);
 
   useEffect(() => {
+
     const loadRecipes = async () => {
       try {
         const res = await axios.get(`${API_BASE}/api/squish`);

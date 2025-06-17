@@ -3,11 +3,14 @@ import axios from 'axios';
 import RecipeList from '../components/RecipeList';
 import AddRecipe from '../components/AddRecipe';
 
-const API_BASE = "localhost:3002";
+const API_BASE = "http://localhost:3002";
 
 const Desserts = () => {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [editingRecipe, setEditingRecipe] = useState(null);
+  const [resultMessage, setResultMessage] = useState("");
+
 
 
   useEffect(() => {
@@ -27,13 +30,47 @@ const Desserts = () => {
     setRecipes((recipes) => [...recipes, selectedRecipe]);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API_BASE}/api/squish/${id}`);
+      setRecipes(prev => prev.filter(r => r._id !== id));
+      setSelectedRecipe(null);
+      setEditingRecipe(null);
+      setResultMessage("Recipe deleted.");
+    } catch (err) {
+      console.error(err);
+      setResultMessage("Failed to delete.");
+    }
+  };
+
+
   const openModal = recipe => setSelectedRecipe(recipe);
-  const closeModal = () => setSelectedRecipe(null);
+  const closeModal = () => {
+    setSelectedRecipe(null);
+    setResultMessage("");
+    
+  }
+
 
   return (
     <>
-      <AddRecipe updateRecipes={updateRecipes} />
-      <button onClick={() => setIsEditing(true)}>Edit</button>
+      <AddRecipe
+        updateRecipes={updateRecipes}
+        editingRecipe={editingRecipe}
+        setEditingRecipe={setEditingRecipe}
+        setSelectedRecipe={setSelectedRecipe}
+        setResultMessage={setResultMessage}
+        onEditSuccess={(updated) => {
+          setRecipes(prev =>
+            prev.map(r => (r._id === updated._id ? updated : r))
+          );
+          setEditingRecipe(null);
+          setSelectedRecipe(updated);
+          setResultMessage("Recipe updated.");
+        }}
+        resetFormTrigger={editingRecipe === null && selectedRecipe === null}
+      />
+
       <h2>Desserts</h2>
       <main className="container">
         <RecipeList items={recipes} onCardClick={openModal} />
@@ -80,6 +117,16 @@ const Desserts = () => {
                 <li key={i}>{step}</li>
               ))}
             </ol>
+            <div className="modal-buttons">
+              <button onClick={() => {
+                setEditingRecipe(selectedRecipe);
+                setSelectedRecipe(null);
+              }}>Edit</button>
+
+              <button onClick={() => handleDelete(selectedRecipe._id)}>Delete</button>
+            </div>
+            {resultMessage && <p className="status-message">{resultMessage}</p>}
+
           </div>
         </div>
       )}
