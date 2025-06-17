@@ -1,15 +1,11 @@
-import React, { useState } from "react";
 import "../css/dialog.css";
 import "../css/AddRecipe.css";
+import { useState } from "react";
 
-const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDeleteSuccess }) => {
+const AddRecipe = ({ updateRecipes }) => {
   const [result, setResult] = useState("");
-  const [prevSrc, setPrevSrc] = useState(editingRecipe?.img_name || "");
+  const [prevSrc, setPrevSrc] = useState("");
   const [showAddDialog, setShowAddDialog] = useState(false);
-  const [confirmingDelete, setConfirmingDelete] = useState(false);
-
-  const isEditing = Boolean(editingRecipe);
-  const API_BASE = "https://squish-backend-1.onrender.com";
 
   const uploadImage = (e) => setPrevSrc(URL.createObjectURL(e.target.files[0]));
 
@@ -21,24 +17,19 @@ const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDelet
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setResult(isEditing ? "…Updating" : "…Sending");
+    setResult("…Sending");
 
     const formData = new FormData(e.target);
-    const url = isEditing
-      ? `${API_BASE}/api/squish/${editingRecipe._id}`
-      : `${API_BASE}/api/squish`;
-
-    const method = isEditing ? "PUT" : "POST";
-
-    const res = await fetch(url, {
-      method,
+    const API_BASE = "localhost:3002";
+    const res = await fetch(`${API_BASE}/api/squish`, {
+      method: "POST",
       body: formData,
     });
 
     if (res.ok) {
-      const data = await res.json();
-      setResult(isEditing ? "Recipe Updated!" : "Recipe Added!");
-      isEditing ? onEditSuccess(data) : updateRecipes(data);
+      const newRecipe = await res.json();
+      setResult("Recipe Added!");
+      updateRecipes(newRecipe);
       e.target.reset();
       setPrevSrc("");
       closeAddDialog();
@@ -48,40 +39,21 @@ const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDelet
     }
   };
 
-  const handleDelete = async () => {
-    setResult("Deleting...");
-    try {
-      const res = await fetch(`${API_BASE}/api/squish/${editingRecipe._id}`, {
-        method: "DELETE"
-      });
-      if (res.ok) {
-        setResult("Deleted successfully");
-        onDeleteSuccess(editingRecipe._id);
-        closeAddDialog();
-      } else {
-        const errorText = await res.text();
-        setResult("Error: " + errorText);
-      }
-    } catch (err) {
-      setResult("Error deleting recipe");
-    }
-  };
-
   return (
     <div id="add-recipe-plan">
-      <button onClick={openAddDialog} className="add-recipe-btn" label={isEditing ? "Edit Recipe" : "Add Recipe"}>
-        {isEditing ? "✎" : "+"}
+      <button onClick={openAddDialog} className="add-recipe-btn" label="Add Recipe">
+        +
       </button>
 
       {showAddDialog && (
         <div className="modal-backdrop" onClick={closeAddDialog}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()} >
             <button className="close-btn" onClick={closeAddDialog}>
               &times;
             </button>
 
             <form id="add-recipe-form" onSubmit={handleSubmit}>
-              <h3>{isEditing ? "Edit Recipe" : "Create New Recipe"}</h3>
+              <h3>Create New Recipe</h3>
 
               <p>
                 <label htmlFor="name">Recipe Name: </label>
@@ -91,7 +63,6 @@ const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDelet
                   name="name"
                   required
                   minLength={3}
-                  defaultValue={editingRecipe?.name || ""}
                 />
               </p>
 
@@ -103,31 +74,32 @@ const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDelet
                   name="description"
                   required
                   minLength={3}
-                  defaultValue={editingRecipe?.description || ""}
                 />
               </p>
 
               <p>
-                <label htmlFor="ingredients">Ingredients (one per line): </label>
+                <label htmlFor="ingredients">
+                  Ingredients (one per line): 
+                </label>
                 <textarea
                   id="ingredients"
                   name="ingredients"
                   required
                   minLength={3}
                   rows={4}
-                  defaultValue={editingRecipe?.ingredients?.join("\n") || ""}
                 />
               </p>
 
               <p>
-                <label htmlFor="instructions">Instructions (one per line): </label>
+                <label htmlFor="instructions">
+                  Instructions (one per line): 
+                </label>
                 <textarea
                   id="instructions"
                   name="instructions"
                   required
                   minLength={3}
                   rows={4}
-                  defaultValue={editingRecipe?.instructions?.join("\n") || ""}
                 />
               </p>
 
@@ -136,7 +108,7 @@ const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDelet
                   {prevSrc && (
                     <img
                       id="img-prev"
-                      src={prevSrc.startsWith("blob") ? prevSrc : `${API_BASE}/images/${prevSrc.replace(/^images[\\/]/, '')}`}
+                      src={prevSrc}
                       alt="preview"
                     />
                   )}
@@ -153,20 +125,7 @@ const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess, onDelet
                 </p>
               </section>
 
-              <button type="submit">{isEditing ? "Update" : "Submit"}</button>
-
-              {isEditing && (
-                confirmingDelete ? (
-                  <>
-                    <p>Are you sure you want to delete?</p>
-                    <button type="button" onClick={handleDelete}>Yes, Delete</button>
-                    <button type="button" onClick={() => setConfirmingDelete(false)}>Cancel</button>
-                  </>
-                ) : (
-                  <button type="button" onClick={() => setConfirmingDelete(true)}>Delete</button>
-                )
-              )}
-
+              <button type="submit">Submit</button>
               <p>{result}</p>
             </form>
           </div>
