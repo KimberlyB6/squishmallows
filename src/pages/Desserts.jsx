@@ -3,7 +3,7 @@ import axios from 'axios';
 import RecipeList from '../components/RecipeList';
 import AddRecipe from '../components/AddRecipe';
 
-const API_BASE = "http://localhost:3002";
+const API_BASE = "https://squish-backend-1.onrender.com";
 
 //http://localhost:3002
 //https://squish-backend-1.onrender.com
