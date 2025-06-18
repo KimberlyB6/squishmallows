@@ -3,7 +3,10 @@ import axios from 'axios';
 import RecipeList from '../components/RecipeList';
 import AddRecipe from '../components/AddRecipe';
 
-const API_BASE = "https://squish-backend-1.onrender.com";
+const API_BASE = "https://localhost:3002";
+
+//http://localhost:3002
+//https://squish-backend-1.onrender.com
 
 const Desserts = () => {
   const [recipes, setRecipes] = useState([]);

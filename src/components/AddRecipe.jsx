@@ -1,7 +1,7 @@
 import "../css/AddRecipe.css";
 import { useState, useEffect } from "react";
 
-const API_BASE = "https://squish-backend-1.onrender.com";
+const API_BASE = "https://localhost:3002";
 
 const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess = null, resetFormTrigger = false }) => {
   const [result, setResult] = useState("");
