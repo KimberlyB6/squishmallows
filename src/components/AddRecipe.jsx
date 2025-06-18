@@ -53,6 +53,8 @@ useEffect(() => {
   const closeAddDialog = () => {
     setShowDialog(false);
     setResult("");
+    setImg(null);
+    resetForm();
 
     if (!editingRecipe) {
       setName("");
@@ -81,7 +83,7 @@ useEffect(() => {
     if (img) formData.append("img", img);
 
     try {
-      const res = !editingRecipe
+      const res = editingRecipe
         ? await fetch(`${API_BASE}/api/squish/${editingRecipe._id}`, {
             method: "PUT",
             body: formData,
@@ -89,9 +91,9 @@ useEffect(() => {
         : await fetch(`${API_BASE}/api/squish`, {
             method: "POST",
             body: formData,
-          });
-
+          }); 
       const data = await res.json();
+      console.log("Data retrieved is " + data);
 
       if (res.ok) {
         setResult("✅ Success!");
