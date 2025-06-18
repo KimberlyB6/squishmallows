@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/squishmallows/static/css/main.c790ebf7.css",
-    "main.js": "/squishmallows/static/js/main.02de46a3.js",
+    "main.js": "/squishmallows/static/js/main.c5e6d11b.js",
     "index.html": "/squishmallows/index.html",
     "main.c790ebf7.css.map": "/squishmallows/static/css/main.c790ebf7.css.map",
-    "main.02de46a3.js.map": "/squishmallows/static/js/main.02de46a3.js.map"
+    "main.c5e6d11b.js.map": "/squishmallows/static/js/main.c5e6d11b.js.map"
   },
   "entrypoints": [
     "static/css/main.c790ebf7.css",
-    "static/js/main.02de46a3.js"
+    "static/js/main.c5e6d11b.js"
   ]
 }
