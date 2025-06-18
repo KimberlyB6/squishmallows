@@ -2,7 +2,7 @@ import React from 'react';
 import RecipeCard from '../components/RecipeCard';
 import '../css/RecipeList.css';
 
-const API_BASE = "http://localhost:3002";
+const API_BASE = "https://squish-backend-1.onrender.com";
 
 const RecipeList = ({ items, onCardClick }) => (
   <section className='home-list'>
