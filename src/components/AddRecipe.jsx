@@ -1,7 +1,7 @@
 import "../css/AddRecipe.css";
 import { useState, useEffect } from "react";
 
-const API_BASE = "https://localhost:3002";
+const API_BASE = "http://localhost:3002";
 
 const AddRecipe = ({ updateRecipes, editingRecipe = null, onEditSuccess = null, resetFormTrigger = false }) => {
   const [result, setResult] = useState("");
@@ -81,7 +81,7 @@ useEffect(() => {
     if (img) formData.append("img", img);
 
     try {
-      const res = editingRecipe
+      const res = !editingRecipe
         ? await fetch(`${API_BASE}/api/squish/${editingRecipe._id}`, {
             method: "PUT",
             body: formData,
